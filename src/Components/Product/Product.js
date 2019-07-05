@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
 
 class Product extends Component {
+    
     render() {
-        let {imgurl, name, price} = this.props
+        let {name, price, img} = this.props
         return (
             <div>
-                {imgurl} {name} {price}
+                {name} {price} {img} <button onClick={() => this.props.deleteProduct(this.props.id)}>Delete</button>
             </div>
         )
     }

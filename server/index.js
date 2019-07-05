@@ -4,6 +4,7 @@ const massive = require('massive')
 const ctrl = require('./controller')
 const {SERVER_PORT, CONNECTION_STRING} = process.env
 const app = express()
+app.use(express.json())
 
 massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
@@ -14,9 +15,8 @@ massive(CONNECTION_STRING).then(db => {
 })
     .catch(err => console.log(err))
 
-    app.use(express.json())
-
 app.get('/api/inventory', ctrl.getInventory)
 app.post('/api/product', ctrl.addProduct)
+app.delete('/api/inventory/:id', ctrl.deleteProduct)
 
 

@@ -8,7 +8,7 @@ class Form extends Component {
         this.state = {
             name: '',
             price: 0,
-            imgurl: ''
+            img: ''
         }
         this.handleImageChange = this.handleImageChange.bind(this)
         this.handleNameChange = this.handleNameChange.bind(this)
@@ -18,23 +18,20 @@ class Form extends Component {
     }
 
     handleImageChange(e) {
-        let {imgValue} = e.target
         this.setState({
-            imgurl: imgValue
+            img: e.target.value
         })
     }
 
     handleNameChange(e) {
-        let {nameValue} = e.target
         this.setState({
-            name: nameValue
+            name: e.target.value
         })
     }
 
     handlePriceChange(e) {
-        let {priceValue} = e.target
         this.setState({
-            price: priceValue
+            price: e.target.value
         })
     }
 
@@ -42,12 +39,13 @@ class Form extends Component {
         this.setState({
             name: '',
             price: 0,
-            imgurl: ''
+            img: ''
         })
     }
 
     addProduct() {
-        axios.post('/api/product', {name: this.state.name, price: this.state.price, imgurl: this.state.imgurl})
+        console.log(this.state)
+        axios.post('/api/product', {name: this.state.name, price: this.state.price, img: this.state.img})
         .then(res => { 
             this.props.getInventory()
             this.cancelInv()
@@ -58,14 +56,14 @@ class Form extends Component {
     render() {
         return (
             <div>
-                <div>Image URL:
-                    <input onChange={this.handleImageChange}/>
-                </div>
                 <div>Product Name:
-                    <input onChange={this.handleNameChange}/>
+                    <input value={this.state.name} onChange={this.handleNameChange}/>
                 </div>
                 <div>Price:
-                    <input onChange={this.handlePriceChange}/>
+                    <input value={this.state.price} onChange={this.handlePriceChange}/>
+                </div>
+                <div>Image URL:
+                    <input value={this.state.img} onChange={this.handleImageChange}/>
                 </div>
                 <button onClick={this.cancelInv}>Cancel</button>
                 <button onClick={this.addProduct}>Add to Inventory</button>
